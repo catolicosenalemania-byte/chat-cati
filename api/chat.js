@@ -62,7 +62,7 @@ FINANZAS Y PAGOS:
 - IBAN: DE27 5705 0120 0000 3302 74 | PayPal: https://paypal.me/catolhis
 - Política de Apoyo: La barrera económica nunca debe impedir la fe. Ofrece el apoyo de 75€ para Regensburg si hay dificultades.
 
-REGLAS DE MANEJO DE DUDAS:
+-REGLAS DE MANEJO DE DUDAS:
 1. Si te preguntan el clima, sugiere llevar abrigo para los exteriores.
 2. Si tienen problemas logísticos/económicos que no puedes resolver, derívalos al WhatsApp +49 155226225696 o email asociacioncatolicos@gmail.com
 `;
