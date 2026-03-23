@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pascua Peregrina 2026 - Guía del Peregrino</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f4f6f8; }
+        .chat-container { height: calc(100vh - 160px); }
+        .message-bubble { max-width: 85%; line-height: 1.5; }
+        .cati-msg { border-radius: 0 16px 16px 16px; }
+        .user-msg { border-radius: 16px 16px 0 16px; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #0c1f38; border-radius: 10px; }
+    </style>
+</head>
+<body class="h-screen overflow-hidden flex flex-col">
+
+    <header class="bg-[#0c1f38] border-b border-[#163359] py-4 px-6 z-10 shadow-md">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <img src="https://static.wixstatic.com/media/04fa95_a5a1e8ae397447288aa71431fa5a383b~mv2.png" alt="Asociación Logo" class="h-12 w-auto object-contain bg-white rounded-full p-1 shadow-sm">
+                <div>
+                    <h1 class="font-bold text-xl text-white leading-none">Pascua Peregrina 2026</h1>
+                    <p class="text-xs text-[#d4af37] mt-1 uppercase tracking-wider font-semibold">Marburg & Regensburg</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="https://asociacioncatolicos.com/pascua-2026" target="_blank" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Sitio Oficial</a>
+                <button onclick="toggleAdmin()" class="text-[#d4af37] hover:text-white transition-colors"><i class="fas fa-cog"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex-1 flex overflow-hidden max-w-7xl mx-auto w-full">
+        <aside class="hidden md:flex flex-col w-1/3 border-r border-gray-200 bg-white overflow-y-auto p-6 space-y-8">
+            <section class="bg-[#f0f4f8] rounded-2xl p-5 border border-[#c2d1e0]">
+                <h3 class="font-bold text-[#0c1f38] mb-2 flex items-center">
+                    <i class="fas fa-map-marked-alt mr-2"></i> Logística de Viaje
+                </h3>
+                <p class="text-sm text-[#334e68] mb-4 leading-snug">Calcula tu ruta hacia las sedes desde cualquier ciudad.</p>
+                <div class="space-y-3">
+                    <input type="text" id="origin-city" placeholder="Ciudad de origen (Ej: Berlín)" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-[#0c1f38]">
+                    <button onclick="generateTravelPlan()" id="plan-btn" class="w-full bg-[#0c1f38] text-white py-2 rounded-lg text-sm font-bold hover:bg-[#163359] transition-colors shadow-sm">
+                        Consultar Ruta ✨
+                    </button>
+                </div>
+            </section>
+
+            <section>
+                <h3 class="font-bold text-gray-900 mb-4">Información Clave</h3>
+                <div class="space-y-3">
+                    <details class="group border-b border-gray-100 pb-3">
+                        <summary class="flex justify-between items-center cursor-pointer font-medium text-sm text-gray-700">
+                            ¿Necesito inscribirme?
+                            <i class="fas fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <p class="mt-2 text-xs text-gray-600 leading-relaxed">
+                            Solo si requieres alojamiento oficial. Si solo asistes a las celebraciones o te alojas en casa de una familia, <strong>no necesitas inscribirte</strong>.
+                        </p>
+                    </details>
+                    <details class="group border-b border-gray-100 pb-3">
+                        <summary class="flex justify-between items-center cursor-pointer font-medium text-sm text-gray-700">
+                            ¿Puedo donar si no me alojo?
+                            <i class="fas fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <p class="mt-2 text-xs text-gray-600 leading-relaxed">
+                            ¡Sí! Invitamos a quienes no se alojan a realizar una <strong>donación voluntaria</strong> para apoyar los gastos de comidas, traslados, materiales y ayudar a quienes viajan desde lejos.
+                        </p>
+                    </details>
+                    <details class="group border-b border-gray-100 pb-3">
+                        <summary class="flex justify-between items-center cursor-pointer font-medium text-sm text-gray-700">
+                            ¿Dónde es el alojamiento oficial?
+                            <i class="fas fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <p class="mt-2 text-xs text-gray-600 leading-relaxed">
+                            Marburg: DJH Youth Hostel.<br>
+                            Regensburg: Pension Holzgarten (100€ / 75€ con apoyo).
+                        </p>
+                    </details>
+                </div>
+            </section>
+
+            <section class="pt-4 border-t border-gray-100">
+                <p class="text-xs text-gray-400 mb-2 uppercase font-bold tracking-widest">Contacto Directo</p>
+                <div class="flex flex-col space-y-2">
+                    <a href="https://wa.me/49155226225696" target="_blank" class="text-sm flex items-center text-gray-600 hover:text-[#0c1f38]">
+                        <i class="fab fa-whatsapp w-6 text-green-600"></i> +49 155226225696
+                    </a>
+                    <a href="mailto:asociacioncatolicos@gmail.com" class="text-sm flex items-center text-gray-600 hover:text-[#0c1f38]">
+                        <i class="far fa-envelope w-6 text-blue-500"></i> asociacioncatolicos@gmail.com
+                    </a>
+                </div>
+            </section>
+        </aside>
+
+        <main class="flex-1 flex flex-col bg-white">
+            <div class="px-6 py-3 border-b border-gray-100 flex items-center justify-between bg-gray-50">
+                <div class="flex items-center space-x-2">
+                    <span class="relative flex h-3 w-3">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                    </span>
+                    <span class="text-sm font-medium text-gray-600">Cati está en línea para ayudarte</span>
+                </div>
+                <div id="ai-loading" class="hidden text-xs text-[#0c1f38] font-medium italic animate-pulse">
+                    Cati está escribiendo...
+                </div>
+            </div>
+
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-6 space-y-6 chat-container">
+                <div class="flex justify-start">
+                    <div class="message-bubble cati-msg bg-gray-50 p-4 text-sm text-gray-800 shadow-sm border border-gray-200">
+                        Bienvenido a la plataforma de asistencia de la Pascua Peregrina 2026. Soy <strong>Cati</strong>, asistente de la Asociación. 
+                        <br><br>
+                        Estoy aquí para resolver cualquier duda logística sobre los encuentros en Marburg y Regensburg, inscripciones o cómo puedes colaborar. ¿En qué puedo asistirte hoy?
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-6 border-t border-gray-200 bg-white">
+                <div class="relative flex items-center">
+                    <input type="text" id="user-input" onkeypress="handleKey(event)" placeholder="Escriba su consulta aquí..." class="w-full bg-gray-100 border-none rounded-2xl py-4 pl-6 pr-16 text-sm focus:ring-2 focus:ring-[#0c1f38] transition-all outline-none">
+                    <button onclick="sendMessage()" class="absolute right-3 bg-[#0c1f38] text-white p-3 rounded-xl hover:bg-[#163359] transition-colors shadow-md">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <p class="text-[10px] text-gray-400 mt-3 text-center">Toda interacción es registrada para mejorar la atención de la Asociación.</p>
+            </div>
+        </main>
+    </div>
+
+    <div id="admin-modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl w-full max-w-2xl max-h-[80vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                <h2 class="font-bold text-gray-900">Registros de Administración</h2>
+                <button onclick="toggleAdmin()" class="text-gray-400 hover:text-gray-900"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="logs-content" class="flex-1 overflow-y-auto p-6 space-y-3 bg-gray-50">
+                <p class="text-center text-gray-400 py-10">No hay interacciones registradas en esta sesión.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let chatLogs = [];
+
+        // Ahora llamamos a NUESTRO propio servidor seguro (/api/chat), no directamente a Google
+        async function callGemini(userMessage) {
+            document.getElementById('ai-loading').classList.remove('hidden');
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: userMessage })
+                });
+                
+                if (!response.ok) throw new Error("Error en el servidor");
+                
+                const data = await response.json();
+                document.getElementById('ai-loading').classList.add('hidden');
+                return data.reply;
+            } catch (err) {
+                document.getElementById('ai-loading').classList.add('hidden');
+                return "Lo siento, hubo un problema de conexión. Por favor, intente de nuevo o contacte a soporte.";
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('user-input');
+            const container = document.getElementById('chat-messages');
+            const text = input.value.trim();
+            if (!text) return;
+
+            input.value = '';
+            container.innerHTML += `
+                <div class="flex justify-end">
+                    <div class="message-bubble user-msg bg-[#0c1f38] text-white p-4 text-sm shadow-sm">
+                        ${text}
+                    </div>
+                </div>
+            `;
+            container.scrollTop = container.scrollHeight;
+
+            const logEntry = { user: text, timestamp: new Date().toLocaleString(), reply: "..." };
+            chatLogs.push(logEntry);
+
+            const reply = await callGemini(text);
+            logEntry.reply = reply;
+
+            container.innerHTML += `
+                <div class="flex justify-start">
+                    <div class="message-bubble cati-msg bg-gray-50 p-4 text-sm text-gray-800 border border-gray-200 shadow-sm">
+                        ${reply.replace(/\n/g, '<br>')}
+                    </div>
+                </div>
+            `;
+            container.scrollTop = container.scrollHeight;
+        }
+
+        async function generateTravelPlan() {
+            const city = document.getElementById('origin-city').value;
+            if (!city) return;
+            const input = document.getElementById('user-input');
+            input.value = `Necesito ayuda con mi ruta desde ${city}`;
+            sendMessage();
+        }
+
+        function handleKey(e) { if (e.key === 'Enter') sendMessage(); }
+
+        function toggleAdmin() {
+            const modal = document.getElementById('admin-modal');
+            modal.classList.toggle('hidden');
+            if (!modal.classList.contains('hidden')) {
+                const logsContent = document.getElementById('logs-content');
+                if (chatLogs.length === 0) {
+                    logsContent.innerHTML = `<p class="text-center text-gray-400 py-10 italic">No hay interacciones registradas en esta sesión.</p>`;
+                } else {
+                    logsContent.innerHTML = chatLogs.map(log => `
+                        <div class="bg-white p-4 rounded-xl border border-gray-200 text-xs shadow-sm">
+                            <div class="flex justify-between mb-2">
+                                <span class="font-bold text-blue-600">${log.timestamp}</span>
+                            </div>
+                            <p class="mb-2"><strong>Usuario:</strong> ${log.user}</p>
+                            <p class="text-gray-500 italic"><strong>Respuesta Cati:</strong> ${log.reply.substring(0, 100)}...</p>
+                        </div>
+                    `).join('');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
